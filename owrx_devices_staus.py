@@ -18,7 +18,7 @@ class Settings(BaseSettings):
 
     # MQTT topics
     # mqtt_topic_device_state: str = "openwebrx/hp-owrx/RX"
-    mqtt_topic_device_state: str = "openwebrx/raspi-owrx/RX"
+    mqtt_topic_device_state: str = "openwebrx/RX"
 
     # receiver url
     owrx_receiver_url: str = "http://localhost:8073"
