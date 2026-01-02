@@ -14,3 +14,4 @@ services:
 #      - MQTT_USERNAME=
 #      - MQTT_PASSWORD=
 #      - OWRX_RECEIVER_URL=http://localhost:8073/status.json
+#      - MQTT_TOPIC_DEVICE_STATUS=openwebrx/RX
