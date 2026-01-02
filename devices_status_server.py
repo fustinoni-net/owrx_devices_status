@@ -8,6 +8,7 @@ from typing import AsyncGenerator
 import uvicorn
 
 import fastapi
+from starlette.middleware.cors import CORSMiddleware
 from starlette.requests import Request
 from starlette.responses import StreamingResponse
 from fastapi.staticfiles import StaticFiles
@@ -17,6 +18,13 @@ from owrx_devices_staus import OwrxDevicesStatus, owrx_devices_status
 logging.basicConfig(level=logging.INFO)
 
 app = fastapi.FastAPI()
+app.add_middleware( # CORS
+            CORSMiddleware,
+            allow_origins=["*"],
+            allow_methods=["*"],
+            allow_headers=["*"],
+        )
+
 
 active_connections_queues: list[asyncio.queues.Queue] = []
 
