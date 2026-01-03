@@ -8,10 +8,12 @@ services:
       - "8000:8000"
     volumes:
       - .:/app
-#    environment:
-#      - MQTT_BROKER_URL=
-#      - MQTT_BROKER_PORT=
-#      - MQTT_USERNAME=
-#      - MQTT_PASSWORD=
-#      - OWRX_RECEIVER_URL=http://localhost:8073/status.json
-#      - MQTT_TOPIC_DEVICE_STATUS=openwebrx/RX
+    environment:
+      - MQTT_BROKER_URL=
+      - MQTT_BROKER_PORT=1883
+      - MQTT_USERNAME=
+      - MQTT_PASSWORD=
+      - MQTT_USE_TLS=false # set to 'true' to enable TLS
+      - OWRX_RECEIVER_URL=http://localhost:8073/status.json
+      - MQTT_TOPIC_DEVICE_STATUS=openwebrx/RX
+      - MQTT_CLIENT_ID=

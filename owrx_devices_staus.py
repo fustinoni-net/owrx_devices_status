@@ -13,9 +13,11 @@ logging.basicConfig(level=logging.INFO)
 class Settings(BaseSettings):
     mqtt_broker_url: str  = "localhost"
     mqtt_broker_port: int = 1883
+    mqtt_use_tls: bool = False
     mqtt_username: str | None = None
     mqtt_password: str | None = None
     mqtt_topic_device_status: str = "openwebrx/RX"
+    mqtt_client_id: str = "OwrxDevicesStatus"
     # receiver url
     owrx_receiver_url: str = "http://localhost:8073/status.json"
 
@@ -23,6 +25,8 @@ class Settings(BaseSettings):
 settings = Settings()
 logging.info(f"mqtt broker url: {settings.mqtt_broker_url}")
 logging.info(f"mqtt broker pot: {settings.mqtt_broker_port}")
+logging.info(f"mqtt use tls: {settings.mqtt_use_tls}")
+logging.info(f"mqtt client id: {settings.mqtt_client_id}")
 logging.info(f"mqtt topic for devices staus: {settings.mqtt_topic_device_status}")
 logging.info(f"OWRX URL of the status.json resource:  {settings.owrx_receiver_url}")
 
@@ -44,23 +48,24 @@ def get_devices_profiles(url: str) -> tuple[list[str], str]:
     return sdr_names, start_profile_name
 
 class OwrxDevicesStatus:
-    def __init__(self, settings: Settings):
+    def __init__(self, config_setting: Settings):
         super().__init__()
         self.devices: dict[str, str] = {}
         self.device_profile: dict[str, str] = {}
 
-        self.owrx_receiver_url = settings.owrx_receiver_url
+        self.owrx_receiver_url = config_setting.owrx_receiver_url
 
         self.set_devices_from_receiver()
 
-        self.broker_url = settings.mqtt_broker_url
-        self.broker_port = settings.mqtt_broker_port
-        self.username = settings.mqtt_username
-        self.password = settings.mqtt_password
-        self.mqtt_client = mqtt.Client(client_id="OwrxDevicesStatus", protocol=mqtt.MQTTv311)
+        self.broker_url = config_setting.mqtt_broker_url
+        self.broker_port = config_setting.mqtt_broker_port
+        self.username = config_setting.mqtt_username
+        self.password = config_setting.mqtt_password
+        self.mqtt_use_tls = config_setting.mqtt_use_tls
+        self.mqtt_client = mqtt.Client(client_id=config_setting.mqtt_client_id, protocol=mqtt.MQTTv311)
         self.mqtt_client.on_connect = self._on_connect
         self.mqtt_client.on_message = self._on_message
-        self.topic_device_state = settings.mqtt_topic_device_status
+        self.topic_device_state = config_setting.mqtt_topic_device_status
 
         self.devices_status_change_listeners: list[Callable[[dict[str, str]], None]] = []
         self._notify_devices_status_change(self.prepare_massage_to_send())
@@ -74,7 +79,11 @@ class OwrxDevicesStatus:
         self.device_profile: dict[str, str] = {list(self.devices.keys())[0]: start_profile_name}
 
     def __enter__(self):
-        self.mqtt_client.username_pw_set(self.username, self.password)
+        if self.username:
+            self.mqtt_client.username_pw_set(self.username, self.password)
+
+        if self.mqtt_use_tls:
+            self.mqtt_client.tls_set()
 
         self.mqtt_client.connect(self.broker_url, self.broker_port, 60)
         self.mqtt_client.loop_start()
