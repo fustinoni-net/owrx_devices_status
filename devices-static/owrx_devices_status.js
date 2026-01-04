@@ -12,6 +12,7 @@ function upsertDeviceStatus(device, value) {
     row.className = "openwebrx-progressbar";
     //row.style.margin = "8px"; // Spaziatura direttamente via JS
     panel.appendChild(row);
+    panel.appendChild(document.createTextNode(' '));
   }
   // Crea o aggiorna la struttura interna
   row.innerHTML = '';
