@@ -6,6 +6,12 @@ Devices status reporter plugin for [OpenWebRX+](https://github.com/luarvique/ope
 This software implement a "Receiver Plugin" base on the [OpenWebRX+ plugin architecture](https://github.com/0xAF/openwebrxplus-plugins).
 This plugin extends the status panel by displaying the profile name each receiver is currently tuned to, or "Stopped" if inactive. This is particularly useful in multi-user environments, allowing users to identify free devices.
 
+
+<img src="images/owrx.png" alt="owrx" width="75%"  style="display: block; margin: 0 auto;"/><br><br>
+<img src="images/owrx_phone.jpg" alt="owrx phone" width="50%"  style="display: block; margin: 0 auto;"/>
+
+
+
 The plugin consists of two main components:
 - **Server**: A Python-based backend using FastAPI to handle HTTP requests and Server-Sent Events (SSE) for real-time updates.
 - **Client**: A JavaScript frontend that dynamically updates the OpenWebRX+ status panel.
