@@ -64,6 +64,8 @@ if (typeof Plugins !== 'undefined' && Plugins !== null) {
 
             source.onmessage = (event) => onmessage(event);
             source.onerror = (err) => onerror(err);
+
+            return true;
         }
 
 }

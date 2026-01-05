@@ -110,4 +110,5 @@ Replace `<server_url>` with the URL of the server running this plugin.
 ## Notes
 
 - The server logs errors if it fails to retrieve device profiles, and defaults to an empty JSON object.
+- At the very first execution the profile shown can be wrong. The server need to receive at least one MQTT message from OpenWebRX+ to have the correct status.
 

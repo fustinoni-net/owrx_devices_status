@@ -9,7 +9,7 @@ from starlette.requests import Request
 from starlette.responses import StreamingResponse
 from fastapi.staticfiles import StaticFiles
 
-from owrx_devices_staus import owrx_devices_status
+from owrx_devices_status import owrx_devices_status
 
 logging.basicConfig(level=logging.INFO)
 
