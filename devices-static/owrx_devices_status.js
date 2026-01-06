@@ -10,15 +10,14 @@ function upsertDeviceStatus(device, value) {
     row.dataset.device = device;
     row.id = 'ods' + device;
     row.className = "openwebrx-progressbar";
-    //row.style.margin = "8px"; // Spaziatura direttamente via JS
     panel.appendChild(row);
     panel.appendChild(document.createTextNode(' '));
   }
-  // Crea o aggiorna la struttura interna
+
   row.innerHTML = '';
   const span = document.createElement('span');
   span.className = 'openwebrx-progressbar-text';
-  span.textContent = `${device}: ${value}`;
+  span.textContent = `${device} [${value}]`;
   const bar = document.createElement('div');
   bar.className = 'openwebrx-progressbar-bar';
   bar.style.transform = (value === 'Stopped') ? 'translate(-100%) translateZ(0px)' : 'translate(0%) translateZ(0px)';
