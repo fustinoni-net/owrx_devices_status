@@ -15,4 +15,4 @@ COPY . .
 EXPOSE 8000
 
 # Command to run the application
-CMD ["python", "device_status_server.py"]
+CMD ["python", "devices_status_server.py"]
