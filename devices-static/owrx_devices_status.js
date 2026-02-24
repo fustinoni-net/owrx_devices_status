@@ -59,7 +59,7 @@ if (typeof Plugins !== 'undefined' && Plugins !== null) {
             Plugins.owrx_devices_status.API_URL = Plugins.owrx_devices_status.API_URL.replace(/\/$/, '');
 
             panel = document.getElementById('openwebrx-panel-status');
-            source = new EventSource(`${owrx_devices_status_base_url}/devicesEvents`);
+            source = new EventSource(`${Plugins.owrx_devices_status.API_URL}/devicesEvents`);
 
             source.onmessage = (event) => onmessage(event);
             source.onerror = (err) => onerror(err);
