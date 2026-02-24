@@ -34,9 +34,9 @@ MQTT_BROKER_PORT=          # MQTT broker port
 MQTT_USERNAME=             # MQTT username (optional)
 MQTT_PASSWORD=             # MQTT password (optional)
 MQTT_USE_TLS=true          # Use TLS for MQTT (true/false)
-OWRX_RECEIVER_URL=http://localhost:8073/status.json  # OpenWebRX+ receiver status URL
 MQTT_TOPIC_DEVICE_STATUS=openwebrx/RX  # MQTT topic for device status
 MQTT_CLIENT_ID=            # MQTT client ID
+OWRX_RECEIVER_URL=http://localhost:8073/status.json  # OpenWebRX+ receiver status URL
 ```
 
 Set these variables according to your installation.
@@ -50,7 +50,9 @@ Set these variables according to your installation.
 To install the plugin in OpenWebRX+, edit the `init.js` file under the `plugins/receiver` directory (location may vary). Add the following lines:
 
 ```javascript
-Plugins.owrx_devices_status_API_URL = 'http://<server_url>'; // Optional
+Plugins.owrx_devices_status_API_URL = 'http://<server_url>'; // Optional. Use only if the owrx_devices_status
+                                                             // server part responds on a different URL from OpenWebRx+
+                                                             // like for example on a different port number
 Plugins.load('http://<server_url>/devices-static/owrx_devices_status.js');
 ```
 
@@ -111,4 +113,4 @@ Replace `<server_url>` with the URL of the server running this plugin.
 
 - The server logs errors if it fails to retrieve device profiles, and defaults to an empty JSON object.
 - At the very first execution the profile shown can be wrong. The server need to receive at least one MQTT message from OpenWebRX+ to have the correct status.
-
+- If the "Keep device running at all times" are set for a device it will be shown all the time as "Stopped" (probably due to a OpenWebRx+ bug)
